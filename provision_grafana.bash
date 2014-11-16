@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get -y -qq install golang-go mercurial
+apt-get -y -qq install git golang-go mercurial
 
 echo "getting grafana-1.8.1 ..."
 cd /tmp
