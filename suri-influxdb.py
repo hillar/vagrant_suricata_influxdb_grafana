@@ -6,6 +6,7 @@ import sys
 import os
 import time
 import argparse
+import json
 
 parser = argparse.ArgumentParser(prog='suri-influxdb', description='Export suricata stats to InfluxDB')
 parser.add_argument('-H', '--host', default='localhost', help='Host running InfluxDB')
@@ -32,6 +33,9 @@ USER = 'root'
 PASSWORD = 'root'
 
 client = InfluxDBClient(args.host, args.port, USER, PASSWORD, args.db)
+#todo, create db if not exist
+#dbs = client.get_database_list()
+#print dbs
 _,hostname,_,_,_ = os.uname()
 
 while 1:
@@ -51,16 +55,23 @@ while 1:
             print res['message']
         else:
             res = res['message']
-            print "%r" % (res)
             tnow = int(time.time())
+            points = []
             for thread in res:
-                print "%r" % (thread)
                 for counter in res[thread]:
-                    print "%r" % (counter)
-                    #sck.send("%s.%s.%s %s %d\n" % (args.root, thread , counter, res[thread][counter], tnow))
-                    client.write_points([{'name': thread,'columns': ["time", "value", "counter","hostName"],'points':  [tnow, res[thread][counter],counter,hostname]}])
+                    point = {'name': counter, 'columns': ["time", "value", "hostname","thread"], 'points':  [[tnow, res[thread][counter], hostname, thread]]}
+                    points.append(point)
                     if args.verbose:
-                        print "%s.%s.%s %s %d\n" % (args.root, thread , counter, res[thread][counter], tnow)
+                        print "%s.%s.%s %s %d\n" % (args.db, thread , counter, res[thread][counter], tnow)
+            try:
+                client.write_points(points)
+            except:
+                #print str(json.dumps(points))
+                # ? queue points ..
+                error = sys.exc_info()
+                print "points write error :: %r %s:%s/%s" % (error, args.host, args.port, args.db)
+            else:
+                error = False
     if args.oneshot:
         break
     time.sleep(float(args.delay))
