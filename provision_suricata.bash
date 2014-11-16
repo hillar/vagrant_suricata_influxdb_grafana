@@ -35,11 +35,20 @@ rm -rf libhtp
 git clone git://phalanx.openinfosecfoundation.org/oisf.git
 cd oisf
 ./autogen.sh
-./configure --enable-luajit --enable-non-bundled-htp
+./configure --enable-luajit --enable-non-bundled-htp --disable-shared --enable-static --prefix=/opt/suricata
 make
 sudo make install-full
 sudo suricata -T --disable-detection
 sudo suricata --list-app-layer-protos 
 
 cd ..
-rm -rf oisf
+#rm -rf oisf
+
+
+# reading suricata socket with python
+sudo apt-get -y -qq install python-setuptools
+mkdir /opt/suristats2influxdb
+cd /opt/suristats2influxdb
+git clone https://github.com/influxdb/influxdb-python.git
+cd influxdb-python
+python setup.py install
