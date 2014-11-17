@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "installing pre'ps ..."
 sudo apt-get -y -qq install git
 sudo apt-get -y -qq install libtool autoconf pkg-config libpcre3-dev libyaml-dev
 sudo apt-get -y -qq install zlib1g-dev
@@ -8,6 +9,8 @@ sudo apt-get -y -qq install libnet-dev
 sudo apt-get -y -qq install libmagic-dev
 sudo apt-get -y -qq install libjansson-dev
 
+
+echo "building suricata ..."
 cd /tmp
 
 #luajit
@@ -54,8 +57,11 @@ git clone https://github.com/influxdb/influxdb-python.git
 cd influxdb-python
 python setup.py install
 
-
+echo "creating database ..."
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "suricata-stats"}'
 curl -s 'http://192.168.33.111:8086/db?u=root&p=root'
+
+wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/suricatastats2influxdb.py
+
 
 
