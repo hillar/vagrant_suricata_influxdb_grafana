@@ -63,5 +63,6 @@ curl -s 'http://192.168.33.111:8086/db?u=root&p=root'
 
 wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/suricatastats2influxdb.py
 
-
+# /opt/suricata/bin/suricata -c /opt/suricata/etc/suricata/suricata.yaml --disable-detection --unix-socket
+#python /opt/suristats2influxdb/suricatastats2influxdb.py /opt/suricata/var/run/suricata/suricata-command.socket --db=suricata -H 192.168.33.111 -P 8086 
 

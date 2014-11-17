@@ -8,7 +8,3 @@ date
 sleep 5
 date
 netstat -ln
-#curl -s -XPOST 'http://localhost:8086/db?u=root&p=root' -d '{"name": "provision_test"}'
-#curl -s 'http://localhost:8086/db?u=root&p=root'
-#curl -s -X DELETE 'http://localhost:8086/db/provision_test?u=root&p=root'
-#curl -s 'http://localhost:8086/db?u=root&p=root'

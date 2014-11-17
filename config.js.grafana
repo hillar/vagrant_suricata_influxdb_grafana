@@ -4,9 +4,9 @@ function (Settings) {
   return new Settings({
 
     datasources: {
-      suricata: {
+      suri-stats: {
         type: 'influxdb',
-        url: "http://192.168.33.112:3003/db/suricatasc",
+        url: "http://192.168.33.112:3003/db/suricata-stats",
         username: 'root',
         password: 'root',
         default: true

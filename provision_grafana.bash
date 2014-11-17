@@ -3,13 +3,14 @@
 apt-get -y -qq install git golang-go mercurial
 
 echo "getting grafana-1.8.1 ..."
-cd /tmp
-wget -q http://grafanarel.s3.amazonaws.com/grafana-1.8.1.tar.gz
-tar -xzf grafana-1.8.1.tar.gz
+#cd /tmp
+#wget -q http://grafanarel.s3.amazonaws.com/grafana-1.8.1.tar.gz
+#tar -xzf grafana-1.8.1.tar.gz
 mkdir -p /opt/grafana/www/
-mv grafana-1.8.1 /opt/grafana/www/
-wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/config.js.grafana
-mv config.js.grafana /opt/grafana/www/grafana-1.8.1/config.js
+#mv grafana-1.8.1 /opt/grafana/www/
+(cd /opt/grafana/www/; git clone https://github.com/grafana/grafana.git)
+(cd /opt/grafana/www/grafana; wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/config.js.grafana -o config.js)
+#mv config.js.grafana /opt/grafana/www/grafana-1.8.1/config.js
 
 
 echo "getting  & building grafana proxy ..."
@@ -21,6 +22,6 @@ cp /tmp/go/bin/grafanaweb /opt/grafana/bin/grafanaweb
 ldd /opt/grafana/bin/grafanaweb
 
 
-/opt/grafana/bin/grafanaweb -listen="192.168.33.112:3003" -proxy="http://192.168.33.111:8086" -root=/opt/grafana/www/grafana-1.8.1 &
+/opt/grafana/bin/grafanaweb -listen="192.168.33.112:3003" -proxy="http://192.168.33.111:8086" -root=/opt/grafana/www/grafana &
 
-curl http://192.168.33.112:3003/
+
