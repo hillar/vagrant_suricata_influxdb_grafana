@@ -38,6 +38,7 @@ cd oisf
 ./configure --enable-luajit --enable-non-bundled-htp --disable-shared --enable-static --prefix=/opt/suricata
 make
 sudo make install-full
+(cd /tmp/oisf/scripts/suricatasc; python setup.py install)
 sudo suricata -T --disable-detection
 sudo suricata --list-app-layer-protos 
 
@@ -52,3 +53,9 @@ cd /opt/suristats2influxdb
 git clone https://github.com/influxdb/influxdb-python.git
 cd influxdb-python
 python setup.py install
+
+
+curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "suricata-stats"}'
+curl -s 'http://192.168.33.111:8086/db?u=root&p=root'
+
+
