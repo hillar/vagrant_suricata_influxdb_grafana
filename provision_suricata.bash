@@ -42,8 +42,14 @@ cd oisf
 make
 sudo make install-full
 (cd /tmp/oisf/scripts/suricatasc; python setup.py install)
-sudo suricata -T --disable-detection
-sudo suricata --list-app-layer-protos 
+/opt/suricata/bin/suricata -T --disable-detection
+/opt/suricata/bin/suricata --list-app-layer-protos 
+/opt/suricata/bin/suricata --build-info
+(cd /etc/init/; wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/suricata.conf)
+status suricata
+start suricata
+sleep 1
+status suricata
 
 cd ..
 #rm -rf oisf
@@ -61,8 +67,7 @@ echo "creating database ..."
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "suricata-stats"}'
 curl -s 'http://192.168.33.111:8086/db?u=root&p=root'
 
-wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/suricatastats2influxdb.py
+wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/suri-influxdb.py
 
-# /opt/suricata/bin/suricata -c /opt/suricata/etc/suricata/suricata.yaml --disable-detection --unix-socket
-#python /opt/suristats2influxdb/suricatastats2influxdb.py /opt/suricata/var/run/suricata/suricata-command.socket --db=suricata -H 192.168.33.111 -P 8086 
+#python /opt/suristats2influxdb/suri-influxdb.py /opt/suricata/var/run/suricata/suricata-command.socket --db=suricata -H 192.168.33.111 -P 8086 
 
