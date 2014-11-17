@@ -8,6 +8,7 @@ sudo apt-get -y -qq install libpcap-dev
 sudo apt-get -y -qq install libnet-dev
 sudo apt-get -y -qq install libmagic-dev
 sudo apt-get -y -qq install libjansson-dev
+sudo apt-get -y -qq install python-setuptools
 
 
 echo "building suricata ..."
@@ -56,18 +57,18 @@ cd ..
 
 
 # reading suricata socket with python
-sudo apt-get -y -qq install python-setuptools
+
 mkdir /opt/suristats2influxdb
 cd /opt/suristats2influxdb
 git clone https://github.com/influxdb/influxdb-python.git
 cd influxdb-python
 python setup.py install
-
+cd ..
 echo "creating database ..."
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "suricata-stats"}'
 curl -s 'http://192.168.33.111:8086/db?u=root&p=root'
 
 wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/suri-influxdb.py
 
-#python /opt/suristats2influxdb/suri-influxdb.py /opt/suricata/var/run/suricata/suricata-command.socket --db=suricata -H 192.168.33.111 -P 8086 
+python /opt/suristats2influxdb/suri-influxdb.py /opt/suricata/var/run/suricata/suricata-command.socket --db=suricata-stats -H 192.168.33.111 -P 8086 &
 
