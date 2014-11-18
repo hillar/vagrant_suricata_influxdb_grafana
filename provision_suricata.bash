@@ -66,6 +66,7 @@ python setup.py install
 cd ..
 echo "creating database ..."
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "suricata-stats"}'
+curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "grafana"}'
 curl -s 'http://192.168.33.111:8086/db?u=root&p=root'
 
 wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/suri-influxdb.py
