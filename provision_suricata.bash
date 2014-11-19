@@ -68,8 +68,14 @@ echo "creating database ..."
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "suricata-stats"}'
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "grafana"}'
 curl -s 'http://192.168.33.111:8086/db?u=root&p=root'
+# creating continuous queries to turn cummulative values into diff's
+# select difference(0 - value) as value , thread, hostname from /^decoder.*/ group by time(1m) into diff.:series_name
+# select difference(0 - value) as value , hostname from /^flow.*pruned$/ group by time(1m) into diff.:series_name
+# select difference(0 - value) as value , hostname from /^tcp.*/ group by time(1m) into diff.:series_name
 
 wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/suri-influxdb.py
 
-python /opt/suristats2influxdb/suri-influxdb.py /opt/suricata/var/run/suricata/suricata-command.socket --db=suricata-stats -H 192.168.33.111 -P 8086 &
+echo "run suricata dumping counter to influxdb with:"
+echo "python /opt/suristats2influxdb/suri-influxdb.py /opt/suricata/var/run/suricata/suricata-command.socket --db=suricata-stats -H 192.168.33.111 -P 8086 -D 1"
+python /opt/suristats2influxdb/suri-influxdb.py /opt/suricata/var/run/suricata/suricata-command.socket --db=suricata-stats -H 192.168.33.111 -P 8086 -D 1&
 

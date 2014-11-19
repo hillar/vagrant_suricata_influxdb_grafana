@@ -59,8 +59,9 @@ while 1:
             points = []
             for thread in res:
                 for counter in res[thread]:
-                    point = {'name': counter, 'columns': ["time", "value", "hostname","thread"], 'points':  [[tnow, res[thread][counter], hostname, thread]]}
-                    points.append(point)
+                    if res[thread][counter] != 0:
+                        point = {'name': counter, 'columns': ["time", "value", "hostname","thread"], 'points':  [[tnow, res[thread][counter], hostname, thread]]}
+                        points.append(point)
                     if args.verbose:
                         print "%s.%s.%s %s %d\n" % (args.db, thread , counter, res[thread][counter], tnow)
             try:

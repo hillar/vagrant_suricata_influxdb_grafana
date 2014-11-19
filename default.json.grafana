@@ -1,0 +1,331 @@
+{
+  "id": null,
+  "title": "DEFAULT",
+  "originalTitle": "DEFAULT",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": true,
+  "rows": [
+    {
+      "title": "New row",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "$memuse",
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "id": 1,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "bytes"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": true
+          },
+          "targets": [
+            {
+              "function": "max",
+              "column": "value",
+              "series": "$memuse",
+              "query": "select max(value) from \"$memuse\" where $timeFilter group by time($interval) order asc",
+              "alias": "max"
+            },
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "$memuse",
+              "query": "select mean(value) from \"$memuse\" where $timeFilter group by time($interval) order asc",
+              "alias": "mean"
+            },
+            {
+              "function": "min",
+              "column": "value",
+              "series": "$memuse",
+              "query": "select min(value) from \"$memuse\" where $timeFilter group by time($interval) order asc",
+              "alias": "min"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [
+            {
+              "alias": "max",
+              "fillBelowTo": "min",
+              "lines": false
+            },
+            {
+              "alias": "min",
+              "lines": false
+            }
+          ],
+          "interval": "$interval",
+          "links": []
+        }
+      ]
+    },
+    {
+      "title": "New row",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "all..",
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "id": 2,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "bytes",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "thresholdLine": false
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": true,
+            "max": true,
+            "current": true,
+            "total": false,
+            "avg": false,
+            "alignAsTable": true,
+            "rightSide": true
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "difference",
+              "column": "value",
+              "series": "/.*/",
+              "query": "select difference(value) from /.*/ where $timeFilter and value > 0 group by time($interval) order asc",
+              "condition": "value > 0",
+              "interval": ""
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "interval": "$interval",
+          "links": []
+        }
+      ]
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "now": true,
+      "notice": false
+    }
+  ],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "type": "interval",
+        "datasource": null,
+        "refresh_on_load": false,
+        "name": "interval",
+        "options": [
+          {
+            "text": "auto",
+            "value": "$__auto_interval"
+          },
+          {
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "text": "14d",
+            "value": "14d"
+          }
+        ],
+        "includeAll": false,
+        "allFormat": "glob",
+        "query": "1m,5m,10m,15m,30m,1h,6h,12h,1d,7d,14d",
+        "auto": true,
+        "current": {
+          "text": "1m",
+          "value": "1m"
+        }
+      },
+      {
+        "type": "query",
+        "datasource": null,
+        "refresh_on_load": false,
+        "name": "memuse",
+        "options": [
+          {
+            "text": "dns.memuse",
+            "value": "dns.memuse"
+          },
+          {
+            "text": "flow.memuse",
+            "value": "flow.memuse"
+          },
+          {
+            "text": "http.memuse",
+            "value": "http.memuse"
+          },
+          {
+            "text": "tcp.memuse",
+            "value": "tcp.memuse"
+          },
+          {
+            "text": "tcp.reassembly_memuse",
+            "value": "tcp.reassembly_memuse"
+          }
+        ],
+        "includeAll": false,
+        "allFormat": "glob",
+        "query": "list series /.*memuse.*/",
+        "current": {
+          "text": "flow.memuse",
+          "value": "flow.memuse"
+        },
+        "refresh": true,
+        "regex": ""
+      }
+    ],
+    "enable": true
+  },
+  "annotations": {
+    "list": [],
+    "enable": true
+  },
+  "refresh": false,
+  "version": 6,
+  "hideAllLegends": false
+}
