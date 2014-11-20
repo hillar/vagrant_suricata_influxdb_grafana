@@ -3,7 +3,7 @@
 
 boxes = [
   { :name => :influxdb,:ip => '192.168.33.111',:forward => 8086,:cpus => 2,:mem => 1024,:provision => 'provision_influxdb.bash' },
-  { :name => :grafana,:ip => '192.168.33.112',:forward => 3003,:cpus => 1,:mem => 256, :provision => 'provision_grafana.bash' },
+  { :name => :grafana,:ip => '192.168.33.112',:forward => 3003,:cpus => 2,:mem => 2048, :provision => 'provision_grafana.bash' },
   { :name => :suricata,:ip => '192.168.33.113',:cpus => 2, :mem => 1024,:provision => 'provision_suricata.bash'},
   ]
 

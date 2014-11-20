@@ -5,13 +5,15 @@ GRAFANA_VERSION=1.9.0-rc1
 
 apt-get -y -qq install git golang-go mercurial
 
-echo "getting grafana-1.8.1 ..."
+echo "getting grafana-$GRAFANA_VERSION ..."
 cd /tmp
 wget -q http://grafanarel.s3.amazonaws.com/grafana-$GRAFANA_VERSION.tar.gz
 tar -xzf grafana-$GRAFANA_VERSION.tar.gz
 mkdir -p /opt/grafana/www/
 mv grafana-$GRAFANA_VERSION /opt/grafana/www/
 (cd /opt/grafana/www/grafana-$GRAFANA_VERSION; wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/config.js.grafana;  mv config.js.grafana config.js)
+#
+(cd /opt/grafana/www/grafana-$GRAFANA_VERSION/app/dashboards; wget -q https://raw.githubusercontent.com/hillar/vagrant_suricata_influxdb_grafana/master/default.json.grafana;  mv default.json.grafana default.json)
 
 
 echo "getting  & building grafana proxy ..."
