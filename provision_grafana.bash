@@ -31,6 +31,14 @@ ldd /opt/grafana/bin/grafanaweb
 #mkdir -p /opt/influxdb/bin
 #cp /tmp/go/bin/influx-cli /opt/influxdb/bin/
 
+echo "getting  & building metrix ..."
+CGO_ENABLED=0 go get -a -ldflags '-s' github.com/hillar/metrix
+mkdir -p /opt/metrix/bin
+cp /tmp/go/bin/metrix /opt/metrix/bin/metrix
+echo "run metrix with:"
+echo "/opt/metrix/bin/metrix --influxdb root:root@192.168.33.111:8086/metrics --cpu --free --df --files --loadavg --memory --net --processes"
+
+#/tmp/go/bin/metrix --influxdb root:root@192.168.33.111:8086/gemmu --cpu --free --df --files --loadavg --memory --net --processes
 
 echo "run grafana web proxy with:"
 echo "/opt/grafana/bin/grafanaweb -listen="192.168.33.112:3003" -proxy="http://192.168.33.111:8086" -root=/opt/grafana/www/grafana-$GRAFANA_VERSION"
