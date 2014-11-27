@@ -36,7 +36,7 @@ CGO_ENABLED=0 go get -a -ldflags '-s' github.com/hillar/metrix
 mkdir -p /opt/metrix/bin
 cp /tmp/go/bin/metrix /opt/metrix/bin/metrix
 echo "run metrix with:"
-echo "/opt/metrix/bin/metrix --influxdb root:root@192.168.33.111:8086/metrics --cpu --free --df --files --loadavg --memory --net --processes"
+echo "/opt/metrix/bin/metrix --influxdb root:root@192.168.33.111:8086/metrics --cpu --free --df --files --loadavg --memory --net --processes --suricata /opt/suricata/var/run/suricata/suricata-command.socket"
 
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "metrics"}'
 /opt/metrix/bin/metrix --influxdb root:root@192.168.33.111:8086/metrics --cpu --free --df --files --loadavg --memory --net --processes
