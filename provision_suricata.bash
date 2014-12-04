@@ -66,6 +66,7 @@ python setup.py install
 cd ..
 echo "creating database ..."
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "suricata-stats"}'
+curl -s -XPOST 'http://192.168.33.111:8086/cluster/database_configs/test?u=root&p=root' --data-binary '{"spaces":[{"name":"default","regEx":"/.*/","retentionPolicy":"7d","shardDuration":"1d","replicationFactor":1,"split":1,"$$hashKey":"003"}]}' 
 curl -s -XPOST 'http://192.168.33.111:8086/db?u=root&p=root' -d '{"name": "grafana"}'
 curl -s 'http://192.168.33.111:8086/db?u=root&p=root'
 # creating continuous queries to turn cummulative values into diff's
